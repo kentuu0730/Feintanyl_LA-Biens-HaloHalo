@@ -1,0 +1,201 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Item - La Bien's Halo Halo</title>
+    
+  </head>
+  <body>
+    <div class="popup-container">
+      <link rel="stylesheet" href="/assets/modal_style.css">
+      <div class="popup-header">
+        <h2><span class="popup-icon">+</span> Add New Item</h2>
+        <button class="close-btn">&times;</button>
+      </div>
+      
+      <div class="form-tabs">
+        <div class="form-tab active">Product Information</div>
+        <div class="form-tab">Ingredients</div>
+        <div class="form-tab">Inventory Details</div>
+      </div>
+      
+      <div class="popup-body">
+        <!-- Product Tab -->
+        <div class="tab-content active">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="product-id">Product ID <span class="required">*</span></label>
+              <input type="text" id="product-id" placeholder="Automatically generated" disabled>
+            </div>
+            
+            <div class="form-group">
+              <label for="product-name">Product Name <span class="required">*</span></label>
+              <input type="text" id="product-name" placeholder="Enter product name">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="category">Category <span class="required">*</span></label>
+              <select id="category" class="category-select">
+                <option value="">Select Category</option>
+                <option value="1">Desserts</option>
+                <option value="2">Pica-Pica</option>
+                <option value="3">Pizza</option>
+                <option value="4">Flavored Fries</option>
+                <option value="5">Rice Toppings</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="product-price">Price (₱) <span class="required">*</span></label>
+              <input type="number" id="product-price" min="0" step="0.01" placeholder="0.00">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="product-description">Description</label>
+            <textarea id="product-description" rows="2" placeholder="Enter product description"></textarea>
+          </div>
+        </div>
+        
+        <!-- Ingredients Tab -->
+        <div class="tab-content">
+          <div class="section-title">Product Ingredients</div>
+          <p>Select ingredients and specify quantities needed for this product.</p>
+          
+          <div class="ingredients-list">
+            <div class="ingredients-header">
+              <div></div>
+              <div>Ingredient</div>
+              <div>Available Qty</div>
+              <div>Unit</div>
+              <div>Quantity Needed</div>
+            </div>
+            
+            <div class="ingredient-item">
+              <input type="checkbox" class="ingredient-checkbox" id="ing-1">
+              <label for="ing-1">Fresh Milk</label>
+              <div>5.0</div>
+              <div>Liters</div>
+              <input type="number" class="ingredient-quantity" min="0" step="0.1" placeholder="0">
+            </div>
+            
+            <div class="ingredient-item">
+              <input type="checkbox" class="ingredient-checkbox" id="ing-2">
+              <label for="ing-2">Cheese</label>
+              <div>2.0</div>
+              <div>Kg</div>
+              <input type="number" class="ingredient-quantity" min="0" step="0.1" placeholder="0">
+            </div>
+            
+            <div class="ingredient-item">
+              <input type="checkbox" class="ingredient-checkbox" id="ing-3">
+              <label for="ing-3">Fresh Mangoes</label>
+              <div>8.0</div>
+              <div>Pieces</div>
+              <input type="number" class="ingredient-quantity" min="0" step="0.1" placeholder="0">
+            </div>
+            
+            <div class="ingredient-item">
+              <input type="checkbox" class="ingredient-checkbox" id="ing-4">
+              <label for="ing-4">Ube Jam</label>
+              <div>3.0</div>
+              <div>Jars</div>
+              <input type="number" class="ingredient-quantity" min="0" step="0.1" placeholder="0">
+            </div>
+            
+            <div class="ingredient-item">
+              <input type="checkbox" class="ingredient-checkbox" id="ing-5">
+              <label for="ing-5">Ice Cream - Vanilla</label>
+              <div>12.0</div>
+              <div>Liters</div>
+              <input type="number" class="ingredient-quantity" min="0" step="0.1" placeholder="0">
+            </div>
+            
+            <div class="ingredient-item">
+              <input type="checkbox" class="ingredient-checkbox" id="ing-6">
+              <label for="ing-6">Leche Flan</label>
+              <div>15.0</div>
+              <div>Pieces</div>
+              <input type="number" class="ingredient-quantity" min="0" step="0.1" placeholder="0">
+            </div>
+            
+            <div class="ingredient-item">
+              <input type="checkbox" class="ingredient-checkbox" id="ing-7">
+              <label for="ing-7">Nata de Coco</label>
+              <div>4.0</div>
+              <div>Jars</div>
+              <input type="number" class="ingredient-quantity" min="0" step="0.1" placeholder="0">
+            </div>
+            
+            <div class="ingredient-item">
+              <input type="checkbox" class="ingredient-checkbox" id="ing-8">
+              <label for="ing-8">Macapuno</label>
+              <div>3.5</div>
+              <div>Jars</div>
+              <input type="number" class="ingredient-quantity" min="0" step="0.1" placeholder="0">
+            </div>
+          </div>
+          
+          <div class="section-divider"></div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="total-cost">Calculated Cost (₱)</label>
+              <input type="text" id="total-cost" value="0.00" disabled>
+            </div>
+            
+            <div class="form-group">
+              <label for="suggested-price">Suggested Retail Price (₱)</label>
+              <input type="text" id="suggested-price" value="0.00" disabled>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Inventory Tab -->
+        <div class="tab-content">
+          <div class="section-title">Inventory Information</div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="inventory-id">Inventory ID</label>
+              <input type="text" id="inventory-id" placeholder="Automatically generated" disabled>
+            </div>
+            
+            <div class="form-group">
+              <label for="quantity">Initial Quantity <span class="required">*</span></label>
+              <input type="number" id="quantity" min="0" step="1" placeholder="0">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="unit-price">Unit Price (₱) <span class="required">*</span></label>
+              <input type="number" id="unit-price" min="0" step="0.01" placeholder="0.00">
+            </div>
+            
+            <div class="form-group">
+              <label for="expiration-date">Expiration Date</label>
+              <input type="date" id="expiration-date">
+              <div class="expiration-warning">Set for perishable items only</div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="reorder-point">Reorder Point</label>
+            <input type="number" id="reorder-point" min="0" placeholder="Minimum quantity before reordering">
+          </div>
+        </div>
+      </div>
+      
+      <div class="popup-footer">
+        <button class="cancel-btn" id="cancelButton">Cancel</button>
+        <button class="save-btn">Save Item</button>
+      </div>
+    </div>
+    
+    <script src="/assets/modal_script.js"></script>
+  </body>
+  </html>

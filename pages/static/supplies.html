@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Bien's Halo Halo - Supplies Management</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        .header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-align: center;
+            flex: 1;
+            border-bottom: 3px solid transparent;
+        }
+        .tab.active {
+            background-color: #f0f4ff;
+            border-bottom: 3px solid #2575fc;
+            color: #2575fc;
+        }
+        .tab:hover:not(.active) {
+            background-color: #f9f9f9;
+            color: #6a11cb;
+        }
+        .content {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f0f4ff;
+            color: #2575fc;
+            font-weight: 600;
+        }
+        tr:hover {
+            background-color: #f5f7fa;
+        }
+        .supplier-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+        }
+        .supplier-logo {
+            width: 80px;
+            height: 80px;
+            background-color: #f0f4ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 24px;
+            color: #2575fc;
+            font-weight: bold;
+        }
+        .supplier-info {
+            flex: 1;
+        }
+        .supplier-name {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #2575fc;
+        }
+        .supplier-contact {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .supplier-products {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .product-tag {
+            background-color: #f0f4ff;
+            color: #2575fc;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .primary {
+            background-color: #2575fc;
+            color: white;
+        }
+        .primary:hover {
+            background-color: #1a5dbb;
+        }
+        .secondary {
+            background-color: #f0f4ff;
+            color: #2575fc;
+        }
+        .secondary:hover {
+            background-color: #d8e3fc;
+        }
+        .stock-status {
+            font-weight: bold;
+        }
+        .in-stock {
+            color: #28a745;
+        }
+        .low-stock {
+            color: #ffc107;
+        }
+        .out-stock {
+            color: #dc3545;
+        }
+        .search-bar {
+            margin-bottom: 20px;
+            display: flex;
+        }
+        .search-input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 16px;
+        }
+        .search-button {
+            background-color: #2575fc;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        .inventory-summary {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .summary-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            width: 23%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .summary-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2575fc;
+            margin: 10px 0;
+        }
+        .summary-label {
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>La Bien's Halo Halo - Supplies Management</h1>
+    </div>
+    
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active">Halo-Halo Ingredients</div>
+            <div class="tab">Suppliers</div>
+            <div class="tab">Orders</div>
+            <div class="tab">Reports</div>
+        </div>
+        
+        <div class="inventory-summary">
+            <div class="summary-card">
+                <div class="summary-value">42</div>
+                <div class="summary-label">Total Ingredients</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-value">8</div>
+                <div class="summary-label">Low Stock Items</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-value">12</div>
+                <div class="summary-label">Suppliers</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-value">5</div>
+                <div class="summary-label">Pending Orders</div>
+            </div>
+        </div>
+        
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Search ingredients or suppliers...">
+            <button class="search-button">Search</button>
+        </div>
+        
+        <div class="content">
+            <h2>Halo-Halo Ingredients Inventory</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ingredient</th>
+                        <th>Current Stock</th>
+                        <th>Reorder Level</th>
+                        <th>Supplier</th>
+                        <th>Cost (₱)</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Shaved Ice</td>
+                        <td>50 kg</td>
+                        <td>15 kg</td>
+                        <td>CoolFreeze Inc.</td>
+                        <td>35.00/kg</td>
+                        <td><span class="stock-status in-stock">In Stock</span></td>
+                    </tr>
+                    <tr>
+                        <td>Ube Halaya</td>
+                        <td>12 kg</td>
+                        <td>10 kg</td>
+                        <td>Pinoy Delights</td>
+                        <td>180.00/kg</td>
+                        <td><span class="stock-status in-stock">In Stock</span></td>
+                    </tr>
+                    <tr>
+                        <td>Leche Flan</td>
+                        <td>15 trays</td>
+                        <td>5 trays</td>
+                        <td>Sweet Creations</td>
+                        <td>250.00/tray</td>
+                        <td><span class="stock-status in-stock">In Stock</span></td>
+                    </tr>
+                    <tr>
+                        <td>Sago Pearls</td>
+                        <td>8 kg</td>
+                        <td>10 kg</td>
+                        <td>Asian Ingredients Co.</td>
+                        <td>95.00/kg</td>
+                        <td><span class="stock-status low-stock">Low Stock</span></td>
+                    </tr>
+                    <tr>
+                        <td>Gulaman Cubes</td>
+                        <td>9 kg</td>
+                        <td>8 kg</td>
+                        <td>Asian Ingredients Co.</td>
+                        <td>85.00/kg</td>
+                        <td><span class="stock-status in-stock">In Stock</span></td>
+                    </tr>
+                    <tr>
+                        <td>Nata de Coco</td>
+                        <td>25 jars</td>
+                        <td>12 jars</td>
+                        <td>Tropical Harvest</td>
+                        <td>120.00/jar</td>
+                        <td><span class="stock-status in-stock">In Stock</span></td>
+                    </tr>
+                    <tr>
+                        <td>Kaong (Sugar Palm)</td>
+                        <td>18 jars</td>
+                        <td>10 jars</td>
+                        <td>Tropical Harvest</td>
+                        <td>135.00/jar</td>
+                        <td><span class="stock-status in-stock">In Stock</span></td>
+                    </tr>
+                    <tr>
+                        <td>Red Beans</td>
+                        <td>7 kg</td>
+                        <td>8 kg</td>
+                        <td>Bean Master Supply</td>
+                        <td>120.00/kg</td>
+                        <td><span class="stock-status low-stock">Low Stock</span></td>
+                    </tr>
+                    <tr>
+                        <td>Jackfruit (Langka)</td>
+                        <td>14 jars</td>
+                        <td>10 jars</td>
+                        <td>Tropical Harvest</td>
+                        <td>150.00/jar</td>
+                        <td><span class="stock-status in-stock">In Stock</span></td>
+                    </tr>
+                    <tr>
+                        <td>Macapuno Strips</td>
+                        <td>13 jars</td>
+                        <td>10 jars</td>
+                        <td>Tropical Harvest</td>
+                        <td>165.00/jar</td>
+                        <td><span class="stock-status in-stock">In Stock</span></td>
+                    </tr>
+                    <tr>
+                        <td>Banana Slices</td>
+                        <td>5 kg</td>
+                        <td>8 kg</td>
+                        <td>Fresh Fruit Delivery</td>
+                        <td>110.00/kg</td>
+                        <td><span class="stock-status low-stock">Low Stock</span></td>
+                    </tr>
+                    <tr>
+                        <td>Sweetened Chickpeas</td>
+                        <td>11 jars</td>
+                        <td>8 jars</td>
+                        <td>Bean Master Supply</td>
+                        <td>95.00/jar</td>
+                        <td><span class="stock-status in-stock">In Stock</span></td>
+                    </tr>
+                    <tr>
+                        <td>Purple Yam Powder</td>
+                        <td>3 kg</td>
+                        <td>5 kg</td>
+                        <td>Pinoy Delights</td>
+                        <td>280.00/kg</td>
+                        <td><span class="stock-status low-stock">Low Stock</span></td>
+                    </tr>
+                    <tr>
+                        <td>Evaporated Milk</td>
+                        <td>45 cans</td>
+                        <td>30 cans</td>
+                        <td>Dairy Central</td>
+                        <td>48.00/can</td>
+                        <td><span class="stock-status in-stock">In Stock</span></td>
+                    </tr>
+                    <tr>
+                        <td>Condensed Milk</td>
+                        <td>38 cans</td>
+                        <td>30 cans</td>
+                        <td>Dairy Central</td>
+                        <td>55.00/can</td>
+                        <td><span class="stock-status in-stock">In Stock</span></td>
+                    </tr>
+                    <tr>
+                        <td>Ice Cream (Ube)</td>
+                        <td>8 gallons</td>
+                        <td>5 gallons</td>
+                        <td>Sweet Delights Creamery</td>
+                        <td>450.00/gallon</td>
+                        <td><span class="stock-status in-stock">In Stock</span></td>
+                    </tr>
+                    <tr>
+                        <td>Ice Cream (Vanilla)</td>
+                        <td>4 gallons</td>
+                        <td>5 gallons</td>
+                        <td>Sweet Delights Creamery</td>
+                        <td>380.00/gallon</td>
+                        <td><span class="stock-status low-stock">Low Stock</span></td>
+                    </tr>
+                    <tr>
+                        <td>Pinipig (Rice Flakes)</td>
+                        <td>6 kg</td>
+                        <td>8 kg</td>
+                        <td>Rice World PH</td>
+                        <td>175.00/kg</td>
+                        <td><span class="stock-status low-stock">Low Stock</span></td>
+                    </tr>
+                    <tr>
+                        <td>Mango Cubes</td>
+                        <td>9 kg</td>
+                        <td>10 kg</td>
+                        <td>Fresh Fruit Delivery</td>
+                        <td>190.00/kg</td>
+                        <td><span class="stock-status low-stock">Low Stock</span></td>
+                    </tr>
+                    <tr>
+                        <td>Coconut Strips</td>
+                        <td>12 kg</td>
+                        <td>10 kg</td>
+                        <td>Tropical Harvest</td>
+                        <td>140.00/kg</td>
+                        <td><span class="stock-status in-stock">In Stock</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="action-buttons">
+                <button class="button primary">Order Ingredients</button>
+                <button class="button secondary">Export Inventory</button>
+            </div>
+        </div>
+        
+        <h2 style="margin-top: 30px;">Suppliers Directory</h2>
+        
+        <div class="supplier-card">
+            <div class="supplier-logo">TD</div>
+            <div class="supplier-info">
+                <div class="supplier-name">Tropical Harvest</div>
+                <div class="supplier-contact">Contact: Maria Santos | Phone: (02) 8123-4567 | Email: orders@tropicalharvest.ph</div>
+                <div class="supplier-products">
+                    <span class="product-tag">Nata de Coco</span>
+                    <span class="product-tag">Kaong</span>
+                    <span class="product-tag">Jackfruit</span>
+                    <span class="product-tag">Macapuno Strips</span>
+                    <span class="product-tag">Coconut Strips</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="supplier-card">
+            <div class="supplier-logo">PD</div>
+            <div class="supplier-info">
+                <div class="supplier-name">Pinoy Delights</div>
+                <div class="supplier-contact">Contact: Juan Reyes | Phone: (02) 8234-5678 | Email: supply@pinoydelights.com</div>
+                <div class="supplier-products">
+                    <span class="product-tag">Ube Halaya</span>
+                    <span class="product-tag">Purple Yam Powder</span>
+                    <span class="product-tag">Filipino Dessert Ingredients</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="supplier-card">
+            <div class="supplier-logo">CI</div>
+            <div class="supplier-info">
+                <div class="supplier-name">CoolFreeze Inc.</div>
+                <div class="supplier-contact">Contact: Robert Tan | Phone: (02) 8345-6789 | Email: service@coolfreeze.com.ph</div>
+                <div class="supplier-products">
+                    <span class="product-tag">Shaved Ice</span>
+                    <span class="product-tag">Ice Machines</span>
+                    <span class="product-tag">Freezer Supplies</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="supplier-card">
+            <div class="supplier-logo">SC</div>
+            <div class="supplier-info">
+                <div class="supplier-name">Sweet Creations</div>
+                <div class="supplier-contact">Contact: Ana Lim | Phone: (02) 8456-7890 | Email: orders@sweetcreationsph.com</div>
+                <div class="supplier-products">
+                    <span class="product-tag">Leche Flan</span>
+                    <span class="product-tag">Custards</span>
+                    <span class="product-tag">Filipino Desserts</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="supplier-card">
+            <div class="supplier-logo">AI</div>
+            <div class="supplier-info">
+                <div class="supplier-name">Asian Ingredients Co.</div>
+                <div class="supplier-contact">Contact: Peter Go | Phone: (02) 8567-8901 | Email: sales@asianingredients.ph</div>
+                <div class="supplier-products">
+                    <span class="product-tag">Sago Pearls</span>
+                    <span class="product-tag">Gulaman Cubes</span>
+                    <span class="product-tag">Asian Specialty Items</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="supplier-card">
+            <div class="supplier-logo">BM</div>
+            <div class="supplier-info">
+                <div class="supplier-name">Bean Master Supply</div>
+                <div class="supplier-contact">Contact: Elena Cruz | Phone: (02) 8678-9012 | Email: info@beanmastersupply.com</div>
+                <div class="supplier-products">
+                    <span class="product-tag">Red Beans</span>
+                    <span class="product-tag">Sweetened Chickpeas</span>
+                    <span class="product-tag">Bean Products</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="supplier-card">
+            <div class="supplier-logo">FF</div>
+            <div class="supplier-info">
+                <div class="supplier-name">Fresh Fruit Delivery</div>
+                <div class="supplier-contact">Contact: Carlos Mendoza | Phone: (02) 8789-0123 | Email: orders@freshfruitdelivery.ph</div>
+                <div class="supplier-products">
+                    <span class="product-tag">Banana Slices</span>
+                    <span class="product-tag">Mango Cubes</span>
+                    <span class="product-tag">Fresh Fruits</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="supplier-card">
+            <div class="supplier-logo">DC</div>
+            <div class="supplier-info">
+                <div class="supplier-name">Dairy Central</div>
+                <div class="supplier-contact">Contact: Sophia Garcia | Phone: (02) 8890-1234 | Email: wholesale@dairycentral.com.ph</div>
+                <div class="supplier-products">
+                    <span class="product-tag">Evaporated Milk</span>
+                    <span class="product-tag">Condensed Milk</span>
+                    <span class="product-tag">Dairy Products</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="supplier-card">
+            <div class="supplier-logo">SD</div>
+            <div class="supplier-info">
+                <div class="supplier-name">Sweet Delights Creamery</div>
+                <div class="supplier-contact">Contact: Miguel Santos | Phone: (02) 8901-2345 | Email: orders@sweetdelightscreamery.ph</div>
+                <div class="supplier-products">
+                    <span class="product-tag">Ube Ice Cream</span>
+                    <span class="product-tag">Vanilla Ice Cream</span>
+                    <span class="product-tag">Specialty Ice Cream</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="supplier-card">
+            <div class="supplier-logo">RW</div>
+            <div class="supplier-info">
+                <div class="supplier-name">Rice World PH</div>
+                <div class="supplier-contact">Contact: Jose Reyes | Phone: (02) 8012-3456 | Email: sales@riceworldph.com</div>
+                <div class="supplier-products">
+                    <span class="product-tag">Pinipig (Rice Flakes)</span>
+                    <span class="product-tag">Rice Products</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="action-buttons" style="margin-top: 20px;">
+            <button class="button primary">Add New Supplier</button>
+            <button class="button secondary">Generate Order Report</button>
+        </div>
+    </div>
+</body>
+</html>

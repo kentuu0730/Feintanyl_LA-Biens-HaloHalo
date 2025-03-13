@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Bien's Halo Halo - Employee Account Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --danger-color: #f87171;
+            --warning-color: #fbbf24;
+            --success-color: #34d399;
+            --dark-blue: #1e293b;
+            --text-color: #334155;
+            --light-bg: #f8fafc;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--text-color);
+        }
+
+        .sidebar {
+            height: 100vh;
+            width: 205px;
+            background-color: var(--dark-blue);
+            color: white;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding-top: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            width: 30px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .menu-item span {
+            font-size: 14px;
+        }
+
+        .main-content {
+            margin-left: 205px;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--dark-blue);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .user-details {
+            text-align: right;
+        }
+
+        .user-details .name {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .user-details .role {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h2 {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--dark-blue);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn i {
+            margin-right: 6px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #4f46e5;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #ef4444;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #10b981;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            font-weight: 500;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .status-inactive {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #64748b;
+            font-size: 16px;
+            transition: color 0.3s;
+            margin-right: 5px;
+        }
+
+        .action-btn.edit:hover {
+            color: var(--primary-color);
+        }
+
+        .action-btn.delete:hover {
+            color: var(--danger-color);
+        }
+
+        .action-btn.view:hover {
+            color: var(--success-color);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 500px;
+            max-width: 90%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .search-filter {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-filter input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .search-filter select {
+            width: 150px;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            margin: 0 5px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .pagination button:hover, .pagination button.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .show {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="/api/placeholder/30/30" alt="La Bien's Halo Halo">
+            <h1>La Bien's Halo Halo</h1>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-boxes"></i>
+            <span>Inventory</span>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Sales</span>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-utensils"></i>
+            <span>Menu</span>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-truck"></i>
+            <span>Suppliers</span>
+        </div>
+        <div class="menu-item active">
+            <i class="fas fa-users"></i>
+            <span>Employees</span>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-chart-line"></i>
+            <span>Reports</span>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Employee Management</h1>
+            <div class="user-info">
+                <img src="/api/placeholder/32/32" alt="Admin">
+                <div class="user-details">
+                    <div class="name">Admin User</div>
+                    <div class="role">Administrator</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Employee Accounts</h2>
+                <button class="btn btn-primary" id="add-employee-btn">
+                    <i class="fas fa-plus"></i> Add New Employee
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="search-filter">
+                    <input type="text" placeholder="Search employees...">
+                    <select>
+                        <option value="all">All Roles</option>
+                        <option value="admin">Admin</option>
+                        <option value="manager">Manager</option>
+                        <option value="cashier">Cashier</option>
+                        <option value="staff">Staff</option>
+                    </select>
+                    <select>
+                        <option value="all">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Last Login</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>EMP-001</td>
+                                <td>John Doe</td>
+                                <td>johndoe</td>
+                                <td>john.doe@labien.com</td>
+                                <td>Administrator</td>
+                                <td><span class="status status-active">Active</span></td>
+                                <td>Mar 13, 2025 08:45 AM</td>
+                                <td>
+                                    <button class="action-btn view" title="View Details"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn edit" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn delete" title="Delete"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>EMP-002</td>
+                                <td>Jane Smith</td>
+                                <td>janesmith</td>
+                                <td>jane.smith@labien.com</td>
+                                <td>Manager</td>
+                                <td><span class="status status-active">Active</span></td>
+                                <td>Mar 12, 2025 04:30 PM</td>
+                                <td>
+                                    <button class="action-btn view" title="View Details"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn edit" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn delete" title="Delete"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>EMP-003</td>
+                                <td>Carlos Rodriguez</td>
+                                <td>carlosr</td>
+                                <td>carlos.r@labien.com</td>
+                                <td>Cashier</td>
+                                <td><span class="status status-active">Active</span></td>
+                                <td>Mar 13, 2025 09:15 AM</td>
+                                <td>
+                                    <button class="action-btn view" title="View Details"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn edit" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn delete" title="Delete"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>EMP-004</td>
+                                <td>Maria Garcia</td>
+                                <td>mariag</td>
+                                <td>maria.g@labien.com</td>
+                                <td>Staff</td>
+                                <td><span class="status status-inactive">Inactive</span></td>
+                                <td>Mar 10, 2025 10:00 AM</td>
+                                <td>
+                                    <button class="action-btn view" title="View Details"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn edit" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn delete" title="Delete"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>EMP-005</td>
+                                <td>Robert Kim</td>
+                                <td>robertk</td>
+                                <td>robert.k@labien.com</td>
+                                <td>Staff</td>
+                                <td><span class="status status-active">Active</span></td>
+                                <td>Mar 12, 2025 08:15 AM</td>
+                                <td>
+                                    <button class="action-btn view" title="View Details"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn edit" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="action-btn delete" title="Delete"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <button><i class="fas fa-chevron-left"></i></button>
+                    <button class="active">1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <button><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Employee Modal -->
+    <div class="modal" id="employee-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Employee</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="employee-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="first-name">First Name</label>
+                            <input type="text" id="first-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name">Last Name</label>
+                            <input type="text" id="last-name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password">Confirm Password</label>
+                            <input type="password" id="confirm-password" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="role">Role</label>
+                            <select id="role" required>
+                                <option value="">Select Role</option>
+                                <option value="admin">Administrator</option>
+                                <option value="manager">Manager</option>
+                                <option value="cashier">Cashier</option>
+                                <option value="staff">Staff</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select id="status" required>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="permissions">Permissions</label>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px;">
+                            <div style="display: flex; align-items: center;">
+                                <input type="checkbox" id="perm-inventory"> 
+                                <label for="perm-inventory" style="margin: 0 0 0 5px;">Inventory</label>
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                <input type="checkbox" id="perm-sales"> 
+                                <label for="perm-sales" style="margin: 0 0 0 5px;">Sales</label>
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                <input type="checkbox" id="perm-menu"> 
+                                <label for="perm-menu" style="margin: 0 0 0 5px;">Menu</label>
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                <input type="checkbox" id="perm-suppliers"> 
+                                <label for="perm-suppliers" style="margin: 0 0 0 5px;">Suppliers</label>
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                <input type="checkbox" id="perm-employees"> 
+                                <label for="perm-employees" style="margin: 0 0 0 5px;">Employees</label>
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                <input type="checkbox" id="perm-reports"> 
+                                <label for="perm-reports" style="margin: 0 0 0 5px;">Reports</label>
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                <input type="checkbox" id="perm-settings"> 
+                                <label for="perm-settings" style="margin: 0 0 0 5px;">Settings</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" id="cancel-btn">Cancel</button>
+                <button class="btn btn-primary" id="save-btn">Save Employee</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="delete-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirm Delete</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this employee account? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="cancel-delete-btn">Cancel</button>
+                <button class="btn btn-danger" id="confirm-delete-btn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple Modal Functionality
+        const addEmployeeBtn = document.getElementById('add-employee-btn');
+        const employeeModal = document.getElementById('employee-modal');
+        const deleteModal = document.getElementById('delete-modal');
+        const modalCloseButtons = document.querySelectorAll('.modal-close');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+        const deleteButtons = document.querySelectorAll('.action-btn.delete');
+        const editButtons = document.querySelectorAll('.action-btn.edit');
+        
+        // Open Add Employee Modal
+        addEmployeeBtn.addEventListener('click', () => {
+            document.querySelector('#employee-modal .modal-header h3').textContent = 'Add New Employee';
+            document.getElementById('employee-form').reset();
+            employeeModal.classList.add('show');
+        });
+        
+        // Open Edit Employee Modal
+        editButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelector('#employee-modal .modal-header h3').textContent = 'Edit Employee';
+                // In a real application, you would populate the form with the employee data here
+                employeeModal.classList.add('show');
+            });
+        });
+        
+        // Open Delete Confirmation Modal
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                deleteModal.classList.add('show');
+            });
+        });
+        
+        // Close Modals
+        modalCloseButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                employeeModal.classList.remove('show');
+                deleteModal.classList.remove('show');
+            });
+        });
+        
+        cancelBtn.addEventListener('click', () => {
+            employeeModal.classList.remove('show');
+        });
+        
+        cancelDeleteBtn.addEventListener('click', () => {
+            deleteModal.classList.remove('show');
+        });
+        
+        // Close modal if clicked outside of modal content
+        window.addEventListener('click', (e) => {
+            if (e.target === employeeModal) {
+                employeeModal.classList.remove('show');
+            }
+            if (e.target === deleteModal) {
+                deleteModal.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
