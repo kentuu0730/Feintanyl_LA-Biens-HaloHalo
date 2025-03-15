@@ -2,6 +2,38 @@
 document.addEventListener('DOMContentLoaded', function() {
     const tabs = document.querySelectorAll('.form-tab');
     const contents = document.querySelectorAll('.tab-content');
+
+    const categoryMap = {
+      "Desserts": "1",
+      "Pica-Pica": "2",
+      "Pizza": "3",
+      "Flavored Fries": "4",
+      "Rice Toppings": "5"
+    };
+
+    // Loading Data
+    let productId = localStorage.getItem('productId');
+
+    try {
+        fetch(`/endpoints/products/${productId}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('product-name').value = data.name;
+                document.getElementById('category').value = categoryMap[data.category];
+                document.getElementById('product-price').value = data.price;
+                document.getElementById('quantity').value = data.quantity;
+                const expirationDate = new Date(data.expiration_date);
+                const formattedDate = expirationDate.toISOString().split('T')[0];
+                document.getElementById('expiration-date').value = formattedDate;
+                console.log(data.expiration_date)
+                document.getElementById('product-id').value = data.product_id;
+                document.getElementById('inventory-id').value = data.product_id;
+
+            });
+    } catch (error) {
+        console.error('Error fetching product:', error);
+        alert('Failed to fetch product.');
+    }
     
     tabs.forEach((tab, index) => {
       tab.addEventListener('click', () => {
@@ -55,15 +87,15 @@ document.addEventListener('DOMContentLoaded', function() {
       };
 
       try {
-          const response = await fetch('/endpoints/products', {
-              method: 'POST',
+          const response = await fetch('/endpoints/products/' + productId, {
+              method: 'PUT',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(newProduct)
           });
 
           const result = await response.json();
           if (response.ok) {
-              alert('Product added successfully!');
+              alert('Product updated successfully!');
               window.location.href = '/dashboard';
           } else {
               alert('Error: ' + result.error);

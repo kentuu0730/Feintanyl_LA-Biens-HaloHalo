@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>La Bien's Halo Halo - Inventory Management</title>
-  <link rel="stylesheet" href="assets/inventory.css">
+  <link rel="stylesheet" href="../assets/inventory.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -13,18 +13,18 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <div class="brand">
-        <img src="assets/logo.png" alt="La Bien's Logo">
+        <img src="../assets/logo.png" alt="La Bien's Logo">
         <h1>La Bien's Halo Halo</h1>
       </div>
       
       <div class="menu">
-        <div class="menu-item active">
-          <i class="fas fa-boxes"></i>
-          <span>Inventory</span>
-        </div>
         <div class="menu-item">
+          <i class="fas fa-boxes"></i>
+          <span class="inventory-sidebar-button">Inventory</span>
+        </div>
+        <div class="menu-item active">
           <i class="fas fa-truck"></i>
-          <span class="suppliers-button">Suppliers</span>
+          <span>Suppliers</span>
         </div>
         <div class="menu-item">
           <i class="fas fa-sign-out-alt"></i>
@@ -37,9 +37,9 @@
     <div class="main-content">
       <!-- Header -->
       <div class="header">
-        <h1 class="page-title">Inventory Management</h1>
+        <h1 class="page-title">Suppliers</h1>
         <div class="user-menu">
-          <img src="assets/images.jpeg" alt="User">
+          <img src="../assets/images.jpeg" alt="User">
           <div class="user-info">
             <span class="user-name">Admin User</span>
             <span class="user-role">Administrator</span>
@@ -47,85 +47,27 @@
         </div>
       </div>
       
-      <!-- Stats Cards -->
-      <div class="stats-container">
-        <div class="stat-card">
-          <div class="stat-info">
-            <h3>Total Inventory Items</h3>
-            <h2 id="totalItemCount">248</h2>
-            
-          </div>
-          <div class="stat-icon">
-            <i class="fas fa-box"></i>
-          </div>
-        </div>
-        
-        <div class="stat-card bg-green">
-          <div class="stat-info">
-            <h3>In Stock Items</h3>
-            <h2 id="totalStockedCount">236</h2>
-          </div>
-          <div class="stat-icon">
-            <i class="fas fa-check"></i>
-          </div>
-        </div>
-        
-        <div class="stat-card bg-orange">
-          <div class="stat-info">
-            <h3>Low Stock Items</h3>
-            <h2 id="statusLowCount">8</h2>
-          </div>
-          <div class="stat-icon">
-            <i class="fas fa-exclamation"></i>
-          </div>
-        </div>
-        
-        <div class="stat-card bg-red">
-          <div class="stat-info">
-            <h3>Critical Items</h3>
-            <h2 id="statusCriticalCount">4</h2>
-          </div>
-          <div class="stat-icon">
-            <i class="fas fa-exclamation-triangle"></i>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Action Bar -->
-      <div class="action-bar">
-        <div class="search-bar">
-          <i class="fas fa-search"></i>
-          <input type="text" placeholder="Search inventory items...">
-        </div>
-        
-        <div class="action-buttons">
-          <button class="btn btn-primary" id="addNewItem_button">
-            <i class="fas fa-plus"></i> Add New Item
-          </button>
-        </div>
-      </div>
+    
       
       
       <!-- Inventory Table -->
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">
-            <i class="fas fa-boxes"></i> Inventory Items
+            <i class="fas fa-boxes"></i> Suppliers
           </h3>
+          <button class="btn btn-primary" id="addNewItem_button">
+            <i class="fas fa-plus"></i> Add New Supplier
+          </button>
         </div>
         <div class="table-responsive">
           <table>
             <thead>
               <tr>
-                <th>Item</th>
-                <th>Category</th>
-                <th>SKU</th>
-                <th>Quantity</th>
-                <th>Unit</th>
-                <th>Cost Price</th>
-                <th>Status</th>
-                <th>Expiration</th>
-                <th>Actions</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+                <th>Email</th>
               </tr>
             </thead>
             <tbody>
@@ -268,6 +210,6 @@
       </div>
       </div>
       </div>
-      <script src="assets/dashboard.js"></script>
+      <script src="../assets/suppliers.js"></script>
       </body>
 </html>

@@ -27,8 +27,20 @@ app.get('/dashboard', (req, res) => {
     res.sendFile(path.join(__dirname, '../pages/static/inventory.html'));
 });
 
+app.get('/dashboard/suppliers', (req, res) => {
+    res.sendFile(path.join(__dirname, '../pages/static/suppliers.html'));
+});
+
 app.get('/pages/add_item', (req, res) => {
     res.sendFile(path.join(__dirname, '../pages/static/addNewItem.html'));
+});
+
+app.get('/pages/edit_item', (req, res) => {
+    res.sendFile(path.join(__dirname, '../pages/static/editItem.html'));
+});
+
+app.get('/pages/add_supplier', (req, res) => {
+    res.sendFile(path.join(__dirname, '../pages/static/addSuppliers.html'));
 });
 
 module.exports = app;

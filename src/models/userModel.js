@@ -6,7 +6,7 @@ const registerEmployee = async (name, address, phone, email, password, role = "e
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     const [result] = await db.execute(
-      "INSERT INTO Stock_Employee (Name, Address, Phone_Number, Email, Password, Role) VALUES (?, ?, ?, ?, ?, ?)",
+      "INSERT INTO employees (name, address, phone_number, email, password, role) VALUES (?, ?, ?, ?, ?, ?)",
       [name, address, phone, email, hashedPassword, role]
     );
     return result;

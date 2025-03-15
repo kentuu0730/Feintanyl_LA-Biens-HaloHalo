@@ -28,23 +28,18 @@ router.post("/login", async (req, res) => {
       }
   
       console.log("Login request received for:", email);
-  
-      // ✅ Use `execute()` instead of `query()` to work with async/await
-      const [results] = await db.execute("SELECT * FROM Stock_Employee WHERE Email = ?", [email]);
+      const [results] = await db.execute("SELECT * FROM employees WHERE Email = ?", [email]);
       
       if (results.length === 0) {
         return res.status(401).json({ message: "Invalid email or password." });
       }
   
       const user = results[0];
-  
-      // ✅ Compare password securely
-      const isMatch = await bcrypt.compare(password, user.Password); 
+      const isMatch = await bcrypt.compare(password, user.password); 
       if (!isMatch) {
         return res.status(401).json({ message: "Invalid email or password." });
       }
   
-      // ✅ Generate JWT token
       const token = jwt.sign(
         { user_id: user.Employee_ID, email: user.Email, role: user.Role },
         SECRET_KEY,
